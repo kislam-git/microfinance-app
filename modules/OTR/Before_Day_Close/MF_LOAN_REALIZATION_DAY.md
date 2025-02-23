@@ -1,6 +1,6 @@
 # MF_LOAN_REALIZATION_DAY Table
 
-This SQL script creates the `MF_LOAN_REALIZATION_DAY` table, which stores Daily loan realization data for microfinance operations.
+This SQL script creates the `MF_LOAN_REALIZATION_DAY` table, which stores Daily loan realization data for microfinance operations
 
 ## Table Structure
 
