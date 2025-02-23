@@ -1,4 +1,4 @@
-DECLARE
+DECLARE ------------------ When Day Close Process , Call this procedure at the  End of Day End Process
 
   V_COMPANY    VARCHAR2(4) := 'X';
   V_BRANCH     VARCHAR2(4) := 'X';
