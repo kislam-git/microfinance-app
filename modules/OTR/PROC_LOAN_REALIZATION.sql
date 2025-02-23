@@ -324,7 +324,6 @@
                   AND DAY_CLOSE_FLAG IS NULL
                   ;
           
-          
                   DELETE  /*+ INDEX(MF_LOAN_RDRA_PK)*/ MF_LOAN_REALIZATION
                   WHERE 
                   COMPANY_CODE = V_COMPANY  
@@ -333,7 +332,6 @@
                   AND PROJECT_CODE = P_PROJECT_CODE
                   AND COMPONENT_CODE = P_COMPONENT_CODE
                   AND MNYR = V_MNYR
-          
                   ;
                   COMMIT;
           
@@ -400,7 +398,7 @@
                                           AND FINANCE_CODE = P_FINANCE_CODE
                                           AND PROJECT_CODE = P_PROJECT_CODE
                                           AND COMPONENT_CODE = P_COMPONENT_CODE
-                                              AND SAMITY_CODE = M.SAMITY_CODE
+                                          AND SAMITY_CODE = M.SAMITY_CODE
                                           AND MEMBER_ID = M.MEMBER_ID
                                           AND LOAN_CODE = M.LOAN_CODE
                                           AND DAFA_NO = M.DAFA_NO
@@ -414,9 +412,7 @@
           
           
                   END;
-          
-          
-          
+
                   ------------------------------- RECOVERY MEMBER RECEIVABLE
                    BEGIN
           
