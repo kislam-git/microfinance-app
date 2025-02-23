@@ -60,8 +60,6 @@
                                               P_USER              =>      V_USER
                                       );
       
-      
-      
                   END;
                   
                   
@@ -81,9 +79,6 @@
                                               P_TRANS_DATE        =>      P_PROCESS_DATE,
                                               P_USER              =>      V_USER
                                       );
-      
-      
-      
                   END;
                   
                   
@@ -114,15 +109,6 @@
                                          -- DBMS_OUTPUT.PUT_LINE('It is a Holiday '|| V_DATE );
                                   
                                   END IF;
-                               
-                               
-                      
-      
-      
                   END;
-      
-      
-      
-      
           END;
         END;
