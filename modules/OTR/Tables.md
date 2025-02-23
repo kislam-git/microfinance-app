@@ -77,4 +77,41 @@
                                                       MEMBER_ID,
                                                       LOAN_CODE,
                                                       DAFA_NO )
-);                                                      
+);
+
+# Alter Statement if missing columns any schema for this table
+
+        ALTER TABLE SKS.MF_LOAN_REALIZATION ADD ( 
+            FINANCE_CODE VARCHAR2(2 BYTE), 
+            PROJECT_CODE VARCHAR2(2 BYTE), 
+            COMPONENT_CODE VARCHAR2(2 BYTE), 
+            CLS_LOAN_WSC NUMBER(15, 0), 
+            CLS_DUE_WSC NUMBER(15, 0), 
+            CLS_ADV_WSC NUMBER(15, 0), 
+            CLS_LOAN_PRN NUMBER(15, 0), 
+            CLS_DUE_PRN NUMBER(15, 0), 
+            CLS_ADV_PRN NUMBER(15, 0), 
+            LLP_AGE_CODE_OPN VARCHAR2(2 BYTE), 
+            LLP_PCT_OPN NUMBER, 
+            LLP_DAYS_OPN NUMBER(12, 0), 
+            INSTALL_AMT NUMBER(12, 0), 
+            LLP_CM_DAYS NUMBER(12, 0), 
+            CM_DUE_WSC NUMBER(12, 0), 
+            CM_DUE_PRN NUMBER(12, 0), 
+            LLP_CUR_DAYS NUMBER(8, 0), 
+            LLP_CUR_CLASS VARCHAR2(2 BYTE), 
+            DISBURSE_DATE DATE, 
+            DISBURSE_AMT NUMBER(12, 0), 
+            NEW_DISBURSE_FLAG CHAR(1 BYTE), 
+            TR_OUT_FLAG VARCHAR2(1 BYTE), 
+            TR_IN_FLAG VARCHAR2(1 BYTE), 
+            CO_ID VARCHAR2(10 BYTE), 
+            DISBURSE_AMT_WSC NUMBER(15, 0), 
+            CASH_TRANS_DATE DATE, 
+            LOAN_ADJUST_DATE DATE, 
+            INS_BY VARCHAR2(30 BYTE), 
+            INS_DATE DATE, 
+            UPD_BY VARCHAR2(30 BYTE), 
+            UPD_DATE DATE 
+        );
+
