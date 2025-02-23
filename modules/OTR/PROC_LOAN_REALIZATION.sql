@@ -468,9 +468,7 @@
                                                  -- DBMS_OUTPUT.PUT_LINE(V_DAY_OPN);
           
                                               END LOOP ;
-          
-          
-          
+                   
                               END;  
                       DECLARE -------------------------------------------- MONTH TOTAL RECEIVED AND RECOVERY MEMBER RECEIVABLE
                                        CURSOR RC1 IS
