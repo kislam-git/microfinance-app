@@ -8,8 +8,8 @@ BEGIN
         FROM DUAL;
 
 
-        DELETE MF_LRPS_ARCHIVE
-        WHERE MNYR = V_MNYR
+        DELETE MF_LRPS_ARCHIVE -- DELETE ALL DATA
+       -- WHERE MNYR = V_MNYR
         ;
         COMMIT;
        INSERT INTO  MF_LRPS_ARCHIVE
