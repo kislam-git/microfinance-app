@@ -4,6 +4,7 @@
   * mf_loan_realization_day
   * proc_loan_realization_day
   * mf_lrps_archive
+  * update_loan_schedule_job_proc
 
 ### Synonym
 
