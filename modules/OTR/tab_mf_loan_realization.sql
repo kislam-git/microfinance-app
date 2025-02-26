@@ -114,4 +114,7 @@
             UPD_BY VARCHAR2(30 BYTE), 
             UPD_DATE DATE 
         );
-
+# Add New Column   ----------------- Update last close date when process the procedure
+ ALTER TABLE SKS.MF_LOAN_REALIZATION ADD ( 
+        LAST_CLS_DATE DATE
+);
