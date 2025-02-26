@@ -346,6 +346,7 @@
                           , RECEIVABLE_PRN, TOTAL_RECEIVED_PRN, DUE_RCVD_PRN,REG_RCVD_PRN, ADV_RCVD_PRN, UPDATE_BY,  UPDATE_TIME
                           , ADVANCE_ADJUST_WSC, ADVANCE_ADJ_PRN, MONTH_TTL_RCVBLE_WSC, MONTH_TTL_RCVBLE_PRN
                           , MONTH_TTL_REG_RCVD_WSC, MONTH_TTL_REG_RCVD_PRN, LOAN_TYPE, RECOVERY_FLAG, RECOVERY_DATE
+                          , INS_DATE, LAST_CLS_DATE
           
                       )
                       VALUES
@@ -361,6 +362,7 @@
                           , R.ADVANCE_ADJUST_WSC , R.ADVANCE_ADJ_PRN
                           , 0 , 0 ,  0 , 0
                           , NULL , NULL, NULL
+                          , SYSDATE , V_DAY_OPN
                       );
           
                       COMMIT;
