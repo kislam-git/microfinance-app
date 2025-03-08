@@ -362,7 +362,7 @@
                           , R.ADVANCE_ADJUST_WSC , R.ADVANCE_ADJ_PRN
                           , 0 , 0 ,  0 , 0
                           , NULL , NULL, NULL
-                          , SYSDATE , V_DAY_OPN
+                          , SYSDATE , P_CLOSE_DATE
                       );
           
                       COMMIT;
