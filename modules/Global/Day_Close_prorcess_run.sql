@@ -15,7 +15,7 @@
       BEGIN
       
           DECLARE
-      
+                  V_WKYR          VARCHAR2(7) := GET_WEEK_STARTYR(P_PROCESS_DATE);
                   V_PRV_MNYR      VARCHAR2(7) := GET_PERIOD_STARTYR(ADD_MONTHS(P_PROCESS_DATE,-1));
                   V_USER          VARCHAR2(30)   :=   USER;
       
