@@ -80,7 +80,16 @@
                                               P_USER              =>      V_USER
                                       );
                   END;
-                  
+
+                  DECLARE
+                          
+                  BEGIN
+                          
+                              PROC_DAY_SUMMARY(
+                                      P_COMPANY,P_BRANCH, P_FINANCE_CODE, P_PROJECT_CODE, P_COMPONENT_CODE,
+                                      P_PROCESS_DATE,P_MNYR,V_WKYR,SUBSTR(P_MNYR,4,4)||'_'||TO_CHAR(SUBSTR(P_MNYR,6,2)+1));
+                          
+                  END;
                   
                   DECLARE -------------------------------- RUN MF DAY SUMMARY
       
