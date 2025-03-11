@@ -1,0 +1,66 @@
+CREATE TABLE MF_OTR_INFO_BRANCH_DAY
+    (
+    COMPANY_CODE               VARCHAR2(4),
+    COMPANY_BRANCH_CODE        VARCHAR2(4),
+    FINANCE_CODE               VARCHAR2(2),
+    PROJECT_CODE               VARCHAR2(2),
+    COMPONENT_CODE             VARCHAR2(2),
+    FY_YEAR                    VARCHAR2(7),
+    MNYR                       VARCHAR2(7),
+    TRANSACTION_DAY            DATE,
+    BCD_RECEIVABLE_WSC           NUMBER(15),
+    BCD_TOTAL_RECEIVED_WSC       NUMBER(15),
+    BCD_DUE_RCVD_WSC             NUMBER(15),
+    BCD_REG_RCVD_WSC             NUMBER(15),
+    BCD_ADV_RCVD_WSC             NUMBER(15),
+    BCD_ADV_ADJUST_WSC           NUMBER(15),
+    BCD_OTR_WSC                  NUMBER(5,2),
+   
+    BCD_RECEIVABLE_PRN           NUMBER(16,2),
+    BCD_TOTAL_RECEIVED_PRN       NUMBER(16,2),
+    BCD_DUE_RCVD_PRN             NUMBER(16,2),
+    BCD_REG_RCVD_PRN             NUMBER(16,2),
+    BCD_ADV_RCVD_PRN             NUMBER(16,2),
+    BCD_ADV_ADJ_PRN              NUMBER(16,2),
+    BCD_OTR_PRN                  NUMBER(5,2),
+    
+    ACD_RECEIVABLE_WSC           NUMBER(15),
+    ACD_TOTAL_RECEIVED_WSC       NUMBER(15),
+    ACD_DUE_RCVD_WSC             NUMBER(15),
+    ACD_REG_RCVD_WSC             NUMBER(15),
+    ACD_ADV_RCVD_WSC             NUMBER(15),
+    ACD_ADV_ADJUST_WSC           NUMBER(15),
+    ACD_OTR_WSC                  NUMBER(5,2),
+   
+    ACD_RECEIVABLE_PRN           NUMBER(16,2),
+    ACD_TOTAL_RECEIVED_PRN       NUMBER(16,2),
+    ACD_DUE_RCVD_PRN             NUMBER(16,2),
+    ACD_REG_RCVD_PRN             NUMBER(16,2),
+    ACD_ADV_RCVD_PRN             NUMBER(16,2),
+    ACD_ADV_ADJ_PRN              NUMBER(16,2),
+    ACD_OTR_PRN                  NUMBER(5,2),
+    
+    
+    TD_RECEIVABLE_WSC           NUMBER(15),
+    TD_TOTAL_RECEIVED_WSC       NUMBER(15),
+    TD_DUE_RCVD_WSC             NUMBER(15),
+    TD_REG_RCVD_WSC             NUMBER(15),
+    TD_ADV_RCVD_WSC             NUMBER(15),
+    TD_ADV_ADJUST_WSC           NUMBER(15),
+    TD_OTR_WSC                  NUMBER(5,2),
+   
+    TD_RECEIVABLE_PRN           NUMBER(16,2),
+    TD_TOTAL_RECEIVED_PRN       NUMBER(16,2),
+    TD_DUE_RCVD_PRN             NUMBER(16,2),
+    TD_REG_RCVD_PRN             NUMBER(16,2),
+    TD_ADV_RCVD_PRN             NUMBER(16,2),
+    TD_ADV_ADJ_PRN              NUMBER(16,2),
+    TD_OTR_PRN                  NUMBER(5,2),
+    INS_BY                      VARCHAR2(30),
+    INS_DATE                    DATE,
+    UPD_BY                      VARCHAR2(30),
+    UPD_DATE                    DATE,
+    
+    CONSTRAINT MF_OTR_INFO_BRANCH_DAY_PK PRIMARY KEY (COMPANY_CODE, COMPANY_BRANCH_CODE, FINANCE_CODE, PROJECT_CODE, COMPONENT_CODE,FY_YEAR, MNYR, TRANSACTION_DAY)
+    
+    );
