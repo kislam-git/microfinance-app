@@ -1073,6 +1073,96 @@
                 );
             
             END;
+
+	DECLARE ------------------------- CO Wise 
+              
+            
+            BEGIN
+            
+                DELETE MF_OTR_INFO_CO_DAY
+                WHERE COMPANY_CODE = P_COMPANY
+                AND MNYR = V_MNYR
+                AND COMPANY_BRANCH_CODE = V_BRANCH
+                AND FINANCE_CODE = P_FINANCE_CODE
+                AND PROJECT_CODE = P_PROJECT_CODE
+                AND COMPONENT_CODE = P_COMPONENT_CODE
+                AND TRANSACTION_DAY = P_TRANS_DATE
+                ;
+                
+                COMMIT;
+                
+                INSERT INTO MF_OTR_INFO_CO_DAY
+                (
+                    COMPANY_CODE, COMPANY_BRANCH_CODE, FINANCE_CODE, PROJECT_CODE, COMPONENT_CODE, FY_YEAR, MNYR, TRANSACTION_DAY, CO_ID
+                    , BCD_RECEIVABLE_WSC, BCD_TOTAL_RECEIVED_WSC, BCD_DUE_RCVD_WSC, BCD_REG_RCVD_WSC, BCD_ADV_RCVD_WSC, BCD_ADV_ADJUST_WSC
+                    , BCD_OTR_WSC
+                    , BCD_RECEIVABLE_PRN, BCD_TOTAL_RECEIVED_PRN, BCD_DUE_RCVD_PRN, BCD_REG_RCVD_PRN, BCD_ADV_RCVD_PRN, BCD_ADV_ADJ_PRN
+                    , BCD_OTR_PRN
+                    , TD_RECEIVABLE_WSC, TD_TOTAL_RECEIVED_WSC, TD_DUE_RCVD_WSC, TD_REG_RCVD_WSC, TD_ADV_RCVD_WSC, TD_ADV_ADJUST_WSC , TD_OTR_WSC
+                    , TD_RECEIVABLE_PRN, TD_TOTAL_RECEIVED_PRN, TD_DUE_RCVD_PRN, TD_REG_RCVD_PRN, TD_ADV_RCVD_PRN, TD_ADV_ADJ_PRN, TD_OTR_PRN
+                    , INS_BY, INS_DATE
+                )
+                (
+                    SELECT COMPANY_CODE, A.COMPANY_BRANCH_CODE , FINANCE_CODE, PROJECT_CODE, COMPONENT_CODE, V_FY_YEAR , A.MNYR, A.TRANS_DAY, CO_ID
+                    , BCD_RCVBLE_WSC, NVL(BCD_REG_RCVD_WSC,0) + NVL(BCD_DUE_RCVD_WSC,0) + NVL(BCD_ADV_RCVD_WSC,0) , BCD_REG_RCVD_WSC, BCD_DUE_RCVD_WSC, BCD_ADV_RCVD_WSC, BCD_ADV_ADJ_WSC
+                        , ROUND( ( NVL(A.BCD_REG_RCVD_WSC,0) +  NVL(A.BCD_ADV_ADJ_WSC,0)) / DECODE(A.BCD_RCVBLE_WSC, 0, .00001, A.BCD_RCVBLE_WSC)  , 4)  * 100 BCD_OTR_WSC
+                    
+                    , BCD_RECEIVABLE_PRN,  NVL(BCD_DUE_RCVD_PRN,0) +  NVL(BCD_REG_RCVD_PRN,0) + NVL(BCD_ADV_RCVD_PRN,0) , BCD_DUE_RCVD_PRN, BCD_REG_RCVD_PRN, BCD_ADV_RCVD_PRN, BCD_ADV_ADJ_PRN
+                         , ROUND( ( NVL(A.BCD_REG_RCVD_PRN,0) +  NVL(A.BCD_ADV_ADJ_PRN,0)) / DECODE(A.BCD_RECEIVABLE_PRN, 0, .00001, A.BCD_RECEIVABLE_PRN)  , 4)  * 100 BCD_OTR_PRN
+                    
+                    , TD_RECEIVABLE_WSC, NVL(TD_DUE_RCVD_WSC,0) + NVL(TD_REG_RCVD_WSC,0) + NVL(TD_ADV_RCVD_WSC,0) , TD_DUE_RCVD_WSC, TD_REG_RCVD_WSC, TD_ADV_RCVD_WSC, TD_ADV_ADJUST_WSC, TD_OTR_WSC
+                    , TD_RECEIVABLE_PRN, NVL(TD_DUE_RCVD_PRN,0) + NVL(TD_REG_RCVD_PRN,0) + NVL(TD_ADV_RCVD_PRN,0) , TD_DUE_RCVD_PRN, TD_REG_RCVD_PRN, TD_ADV_RCVD_PRN, TD_ADV_ADJ_PRN, TD_OTR_PRN
+                    , P_USER, SYSDATE
+                
+                
+                FROM 
+                    (
+                        SELECT L.COMPANY_CODE , L.COMPANY_BRANCH_CODE , L.TRANS_DAY, L.MNYR, L.FINANCE_CODE, L.PROJECT_CODE, L.COMPONENT_CODE , S.CO_ID
+                            ,   NVL(SUM(RECEIVABLE_WSC),0) BCD_RCVBLE_WSC , NVL(SUM(REG_RCVD_WSC),0) BCD_REG_RCVD_WSC, NVL(SUM(DUE_RCVD_WSC),0) BCD_DUE_RCVD_WSC
+                                    , NVL(SUM(ADV_RCVD_WSC),0) BCD_ADV_RCVD_WSC, NVL(SUM(ADVANCE_ADJUST_WSC),0) BCD_ADV_ADJ_WSC
+                                    
+                            ,   NVL(SUM(RECEIVABLE_PRN),0) BCD_RECEIVABLE_PRN , NVL(SUM(REG_RCVD_PRN),0) BCD_REG_RCVD_PRN
+                                    , NVL(SUM(DUE_RCVD_PRN),0) BCD_DUE_RCVD_PRN , NVL(SUM(ADV_RCVD_PRN),0) BCD_ADV_RCVD_PRN , NVL(SUM(ADVANCE_ADJ_PRN),0) BCD_ADV_ADJ_PRN
+                           
+                            , NVL(SUM(TD_RCVBLE_WSC),0) TD_RECEIVABLE_WSC  , NVL(SUM(TD_REG_RCVD_WSC),0) TD_REG_RCVD_WSC , NVL(SUM(TD_DUE_RCVD_WSC),0) TD_DUE_RCVD_WSC
+                            , NVL(SUM(TD_ADV_RCVD_WSC),0) TD_ADV_RCVD_WSC , NVL(SUM(TD_ADV_ADJ_WSC),0) TD_ADV_ADJUST_WSC 
+                            , ROUND((NVL(SUM(TD_REG_RCVD_WSC),0) + NVL(SUM(TD_ADV_ADJ_WSC),0)) / DECODE(NVL(SUM(TD_RCVBLE_WSC),0), 0 , 1, SUM(TD_RCVBLE_WSC))  ,4) * 100 TD_OTR_WSC
+                            
+                     
+                            , NVL(SUM(TD_RCVBLE_PRN),0) TD_RECEIVABLE_PRN , NVL(SUM(TD_REG_RCVD_PRN),0) TD_REG_RCVD_PRN 
+                            , NVL(SUM(TD_DUE_RCVD_PRN),0) TD_DUE_RCVD_PRN , NVL(SUM(TD_ADV_RCVD_PRN),0) TD_ADV_RCVD_PRN,  NVL(SUM(TD_ADV_ADJ_PRN),0) TD_ADV_ADJ_PRN
+                            , ROUND((NVL(SUM(TD_REG_RCVD_PRN),0) + NVL(SUM(TD_ADV_ADJ_PRN),0)) / DECODE(NVL(SUM(TD_RCVBLE_PRN),0), 0 , 1, SUM(TD_RCVBLE_PRN))  ,4) * 100 TD_OTR_PRN
+                            
+                    FROM MF_LOAN_REALIZATION_DAY L
+                        JOIN  
+                            (
+                            SELECT COMPANY_CODE, COMPANY_BRANCH_CODE,  FINANCE_CODE, PROJECT_CODE, COMPONENT_CODE,  SAMITY_CODE, FW_ID CO_ID
+                            FROM SAMITY_INFO
+                            WHERE COMPANY_CODE = P_COMPANY
+                            AND COMPANY_BRANCH_CODE = V_BRANCH
+                            ) S
+                        ON
+                            (
+                                L.COMPANY_CODE = S.COMPANY_CODE
+                            AND L.COMPANY_BRANCH_CODE = S.COMPANY_BRANCH_CODE
+                            AND L.FINANCE_CODE = S.FINANCE_CODE
+                            AND L.PROJECT_CODE = S.PROJECT_CODE
+                            AND L.COMPONENT_CODE = S.COMPONENT_CODE
+                            AND L.SAMITY_CODE = S.SAMITY_CODE
+                            )
+                    WHERE L.COMPANY_CODE = P_COMPANY
+                    AND L.MNYR = V_MNYR
+                    AND L.COMPANY_BRANCH_CODE = V_BRANCH
+                    AND L.FINANCE_CODE = P_FINANCE_CODE
+                    AND L.PROJECT_CODE = P_PROJECT_CODE
+                    AND L.COMPONENT_CODE = P_COMPONENT_CODE
+                    AND L.TRANS_DAY = P_TRANS_DATE
+                    GROUP BY L.COMPANY_CODE , L.COMPANY_BRANCH_CODE , L.TRANS_DAY, L.MNYR, L.FINANCE_CODE, L.PROJECT_CODE, L.COMPONENT_CODE , S.CO_ID
+                    ) A
+                
+                );
+            
+            END;
         END;     ----------------------------------- END OF OTR HISTORY DATA INSERT  
             
     END;
