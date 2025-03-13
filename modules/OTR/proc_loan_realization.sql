@@ -731,7 +731,7 @@
                                         
                                         , ACD_RECEIVABLE_PRN = R.ACD_RECEIVABLE_PRN, ACD_TOTAL_RECEIVED_PRN = R.ACD_TOTAL_RECEIVED_PRN
                                         , ACD_DUE_RCVD_PRN = R.ACD_DUE_RCVD_PRN, ACD_REG_RCVD_PRN = R.ACD_REG_RCVD_PRN, ACD_ADV_RCVD_PRN = R.ACD_ADV_RCVD_PRN
-                                        , ACD_ADV_ADJ_PRN = R.ACD_ADV_RCVD_PRN , ACD_OTR_PRN = R.ACD_OTR_PRN
+                                        , ACD_ADV_ADJ_PRN = R.ACD_ADV_ADJ_PRN , ACD_OTR_PRN = R.ACD_OTR_PRN
                                         
                                         , UPD_BY = USER, UPD_DATE = SYSDATE
                                     WHERE COMPANY_CODE = V_COMPANY
