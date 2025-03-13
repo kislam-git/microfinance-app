@@ -647,6 +647,7 @@
                     AND PROJECT_CODE = P_PROJECT_CODE
                     AND COMPONENT_CODE = P_COMPONENT_CODE
                     GROUP BY COMPANY_CODE , COMPANY_BRANCH_CODE , LAST_CLS_DATE, MNYR, FINANCE_CODE, PROJECT_CODE, COMPONENT_CODE, LOAN_CODE
+                    HAVING NVL(SUM(RECEIVABLE_WSC),0) > 0
                     ;
             
                     BEGIN
@@ -718,6 +719,7 @@
                     AND L.PROJECT_CODE = P_PROJECT_CODE
                     AND L.COMPONENT_CODE = P_COMPONENT_CODE
                     GROUP BY L.COMPANY_CODE , L.COMPANY_BRANCH_CODE , L.LAST_CLS_DATE, L.MNYR, L.FINANCE_CODE, L.PROJECT_CODE, L.COMPONENT_CODE, S.CO_ID
+                    HAVING NVL(SUM(RECEIVABLE_WSC),0) > 0
                     ;
             
                     BEGIN
