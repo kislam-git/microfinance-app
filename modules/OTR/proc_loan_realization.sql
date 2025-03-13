@@ -623,6 +623,62 @@
                             END LOOP;
                     
                     END;
+
+
+                    DECLARE ----------------------------------------------- UPDATE Loan Code WISE OTR HISTORY DATA
+
+                    CURSOR C1 IS
+                    SELECT 
+                       COMPANY_CODE , COMPANY_BRANCH_CODE , LAST_CLS_DATE,  MNYR, FINANCE_CODE, PROJECT_CODE, COMPONENT_CODE,LOAN_CODE,
+                       NVL(SUM(RECEIVABLE_WSC),0) ACD_RECEIVABLE_WSC, NVL(SUM(DUE_RCVD_WSC),0) ACD_DUE_RCVD_WSC, NVL(SUM(REG_RCVD_WSC),0) ACD_REG_RCVD_WSC, NVL(SUM(ADV_RCVD_WSC),0)ACD_ADV_RCVD_WSC,
+                       NVL(SUM(ADVANCE_ADJUST_WSC),0)ACD_ADV_ADJUST_WSC,
+                       NVL(SUM(TOTAL_RECEIVED_WSC),0) ACD_TOTAL_RECEIVED_WSC,
+                       ROUND((NVL(SUM(REG_RCVD_WSC),0) + NVL(SUM(ADVANCE_ADJUST_WSC),0)) / DECODE(NVL(SUM(RECEIVABLE_WSC),0), 0 , .00001, SUM(RECEIVABLE_WSC)),4) * 100 ACD_OTR_WSC,
+                       
+                       NVL(SUM(RECEIVABLE_PRN),0) ACD_RECEIVABLE_PRN, NVL(SUM(DUE_RCVD_PRN),0) ACD_DUE_RCVD_PRN, NVL(SUM(REG_RCVD_PRN),0) ACD_REG_RCVD_PRN, NVL(SUM(ADV_RCVD_PRN),0)ACD_ADV_RCVD_PRN,
+                       NVL(SUM(ADVANCE_ADJ_PRN),0)ACD_ADV_ADJ_PRN,
+                       NVL(SUM(TOTAL_RECEIVED_PRN),0) ACD_TOTAL_RECEIVED_PRN,
+                       ROUND((NVL(SUM(REG_RCVD_PRN),0) + NVL(SUM(ADVANCE_ADJ_PRN),0)) / DECODE(NVL(SUM(RECEIVABLE_PRN),0), 0 , .00001, SUM(RECEIVABLE_PRN)),4) * 100 ACD_OTR_PRN
+                    FROM  MF_LOAN_REALIZATION
+                    WHERE COMPANY_CODE = V_COMPANY
+                    AND COMPANY_BRANCH_CODE = V_BRANCH
+                    AND MNYR = P_MNYR
+                    AND FINANCE_CODE = P_FINANCE_CODE
+                    AND PROJECT_CODE = P_PROJECT_CODE
+                    AND COMPONENT_CODE = P_COMPONENT_CODE
+                    GROUP BY COMPANY_CODE , COMPANY_BRANCH_CODE , LAST_CLS_DATE, MNYR, FINANCE_CODE, PROJECT_CODE, COMPONENT_CODE, LOAN_CODE
+                    ;
+            
+                    BEGIN
+                    
+                            FOR R IN C1
+                            LOOP
+                                    UPDATE MF_OTR_INFO_COMP_DAY
+                                    SET ACD_RECEIVABLE_WSC = R.ACD_RECEIVABLE_WSC, ACD_TOTAL_RECEIVED_WSC = R.ACD_TOTAL_RECEIVED_WSC
+                                        , ACD_DUE_RCVD_WSC = R.ACD_DUE_RCVD_WSC, ACD_REG_RCVD_WSC = R.ACD_REG_RCVD_WSC, ACD_ADV_RCVD_WSC = R.ACD_ADV_RCVD_WSC
+                                        , ACD_ADV_ADJUST_WSC = R.ACD_ADV_RCVD_WSC , ACD_OTR_WSC = R.ACD_OTR_WSC
+                                        
+                                        , ACD_RECEIVABLE_PRN = R.ACD_RECEIVABLE_PRN, ACD_TOTAL_RECEIVED_PRN = R.ACD_TOTAL_RECEIVED_PRN
+                                        , ACD_DUE_RCVD_PRN = R.ACD_DUE_RCVD_PRN, ACD_REG_RCVD_PRN = R.ACD_REG_RCVD_PRN, ACD_ADV_RCVD_PRN = R.ACD_ADV_RCVD_PRN
+                                        , ACD_ADV_ADJ_PRN = R.ACD_ADV_RCVD_PRN , ACD_OTR_PRN = R.ACD_OTR_PRN
+                                        
+                                        , UPD_BY = USER, UPD_DATE = SYSDATE
+                                    WHERE COMPANY_CODE = V_COMPANY
+                                    AND COMPANY_BRANCH_CODE = V_BRANCH
+                                    AND FINANCE_CODE = P_FINANCE_CODE
+                                    AND PROJECT_CODE = P_PROJECT_CODE
+                                    AND COMPONENT_CODE = P_COMPONENT_CODE
+                                    AND MNYR = P_MNYR
+                                    AND TRANSACTION_DAY = P_CLOSE_DATE
+                                    AND LOAN_CODE = R.LOAN_CODE
+                                    ;
+                                    
+                                    COMMIT;
+                                    
+                            
+                            END LOOP;
+                    
+                    END;
               
               
               END;----------------------------------- END OF OTR HISTORY DATA UDPATE
